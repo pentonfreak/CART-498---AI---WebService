@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: museum-of-misplaced-meaning
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 240
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: TEXT_MODEL
+        value: gpt-5.4-mini
+      - key: IMAGE_MODEL
+        value: gpt-image-2.5-flare
+      - key: MAX_GENERATIONS_PER_HOUR
+        value: '8'

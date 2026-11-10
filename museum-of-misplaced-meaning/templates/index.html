@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Turn the most ordinary object into the most unnecessarily serious contemporary artwork.">
+  <meta name="theme-color" content="#f0eee8">
+  <title>Museum of Misplaced Meaning — An Exhibition Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="identity" href="/" aria-label="Museum of Misplaced Meaning home">
+      <span class="identity-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span>M<span class="dot">.</span>M<span class="dot">.</span>M<span class="dot">.</span></span>
+    </a>
+    <div class="masthead-center">Museum of Misplaced Meaning <span class="middot">·</span> Est. Now</div>
+    <span class="edition">AN UNNECESSARY INSTITUTION <span class="signal" aria-hidden="true"></span></span>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-overline"><span class="line"></span> THE COLLECTION OF ALMOST EVERYTHING / 2026</div>
+      <div class="hero-grid">
+        <div>
+          <h1 id="hero-title">The extraordinary<br>life of <em>ordinary</em><br>things<span class="period">.</span></h1>
+        </div>
+        <div class="hero-aside">
+          <span class="rotated-number">01 — 03</span>
+          <p>We believe no forgotten receipt, chipped mug, or solitary sock should go without a grand theoretical explanation.</p>
+          <p class="mini">A machine curator. A very serious collection. Your everyday object.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="acquisition" aria-labelledby="acquisition-title">
+      <div class="section-heading"><span>01 / ACQUISITION DESK</span><span>OPEN TO THE PUBLIC</span></div>
+      <div class="acquisition-grid">
+        <div class="acquisition-intro">
+          <h2 id="acquisition-title">What are you<br>carrying?</h2>
+          <p>Describe any one object from your pocket, bag, or desk. Be specific. Our curator will be absurdly impressed.</p>
+          <span class="micro-index">OBJECT STUDIES • 001</span>
+        </div>
+        <form id="curate-form" class="object-form" novalidate>
+          <label for="object-description">OBJECT DESCRIPTION <span>(6–400 characters)</span></label>
+          <textarea id="object-description" name="object_description" maxlength="400" minlength="6" rows="4" placeholder="e.g., A faded blue plastic transit card with a bent corner and a scratch across the back..." required></textarea>
+          <div class="entry-meta"><span>ONE OBJECT. INFINITE INTERPRETATIONS.</span><span id="char-count">0 / 400</span></div>
+          <div class="examples" aria-label="Try an example object">
+            <span>TRY AN OBJECT</span>
+            <button type="button" class="example-chip" data-example="A bent silver paperclip with a tiny patch of rust at one end.">Bent paperclip <span aria-hidden="true">↗</span></button>
+            <button type="button" class="example-chip" data-example="One black cotton sock with a small hole at the heel and no matching partner.">Lonely sock <span aria-hidden="true">↗</span></button>
+            <button type="button" class="example-chip" data-example="A crumpled grocery receipt for milk, eggs, and instant noodles, dated this morning.">Grocery receipt <span aria-hidden="true">↗</span></button>
+          </div>
+          <button type="submit" id="submit-button" class="submit-button">
+            <span id="button-text">INSTALL IN THE GALLERY</span>
+            <span class="submit-arrow" aria-hidden="true">↗</span>
+          </button>
+          <div id="status-message" class="status-message" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery" aria-labelledby="gallery-title">
+      <div class="section-heading"><span>02 / MAIN GALLERY</span><span id="gallery-state">AWAITING FIRST ACQUISITION</span></div>
+      <div class="gallery-heading">
+        <div>
+          <div class="eyebrow"><span class="live-dot"></span> EXHIBITION ROOM A</div>
+          <h2 id="gallery-title">The exhibition</h2>
+        </div>
+        <div class="curatorial-stamp">M.M.M. <span>©</span> 2026<br>COLLECTION NO. <span id="accession-number">0000</span></div>
+      </div>
+
+      <div class="exhibition-layout">
+        <div class="artwork-panel" id="artwork-panel">
+          <div class="artwork-toolbar"><span>FIG. 01 — INSTALLATION VIEW</span><span id="image-state">NO ARTWORK INSTALLED</span></div>
+          <div class="artwork-viewport" id="artwork-viewport">
+            <div class="empty-stage" id="empty-stage" aria-label="Empty gallery with a plinth awaiting an object">
+              <div class="stage-spotlight"></div>
+              <div class="stage-sculpture"></div>
+              <div class="stage-plinth"></div>
+              <div class="stage-plinth-side"></div>
+              <span class="stage-note">AN IMPORTANT ABSENCE<br>Dimensions variable</span>
+            </div>
+            <img id="artwork-image" alt="Generated museum installation photograph" hidden>
+            <div class="loading-overlay" id="loading-overlay" hidden>
+              <span class="loading-mark" aria-hidden="true"></span>
+              <span>THE CURATOR IS AT WORK</span>
+              <small>Writing the wall label and installing your artwork…</small>
+            </div>
+          </div>
+          <div class="artwork-footer"><span>COURTESY OF THE MUSEUM OF MISPLACED MEANING</span><span>NOT TO SCALE*</span></div>
+        </div>
+
+        <article class="label-panel" id="label-panel" aria-label="Museum wall label">
+          <div class="label-top"><span>WALL TEXT / 001</span><span class="label-seal" aria-hidden="true">✳</span></div>
+          <div id="empty-label" class="empty-label">
+            <span class="dash-rule"></span>
+            <h3>No object is<br><em>too insignificant.</em></h3>
+            <p>Your future masterpiece and its very authoritative museum label will appear here.</p>
+            <span class="empty-label-footer">CURATORIAL INTERVENTION PENDING</span>
+          </div>
+          <div id="actual-label" hidden>
+            <div class="tombstone">
+              <h3 id="work-title"></h3>
+              <div class="year" id="work-year"></div>
+              <p class="artist-name" id="artist-name"></p>
+              <p class="artist-bio" id="artist-bio"></p>
+              <dl class="metadata">
+                <div><dt>MEDIUM</dt><dd id="medium"></dd></div>
+                <div><dt>DIMENSIONS</dt><dd id="dimensions"></dd></div>
+                <div><dt>PROVENANCE</dt><dd id="provenance"></dd></div>
+                <div><dt>CREDIT LINE</dt><dd id="credit-line"></dd></div>
+              </dl>
+            </div>
+            <div class="interpretation">
+              <h4>CURATORIAL INTERPRETATION</h4>
+              <p id="extended-label"></p>
+            </div>
+            <div class="label-actions">
+              <button type="button" id="copy-label" class="quiet-button">COPY LABEL <span aria-hidden="true">↗</span></button>
+              <button type="button" id="download-image" class="quiet-button">SAVE ARTWORK <span aria-hidden="true">↓</span></button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="footnote">*Unless deliberately inflated by the curatorial department. All cultural authorities represented here are fictional.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-logo">M.M.M.</div>
+    <p>A museum that makes entirely too much of everything.<br>An experiment in the language of contemporary art.</p>
+    <span>THANK YOU FOR YOUR CONTRIBUTION TO CULTURE.<br>NO OBJECTS WERE PHYSICALLY ACQUIRED.</span>
+  </footer>
+</body>
+</html>
